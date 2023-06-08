@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+    <main>
+    <!--Hero-->
+    <div class="px-4 py-5 my-5 text-center">
+      <img class="d-block mx-auto mb-4" src="{{ url_for('static',filename='image/calogo.png') }}" alt="" width="120" height="100">
+      <h1 class="display-5 fw-bold">Cooking Academy</h1>
+      <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">The best cooking classes in your area<br>From all over the world<br>For all skill levels</p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+          <a type="button" href="{{ url_for('classes.view_all_events')}}" class="btn btn-primary btn-lg px-4 gap-3">Browse Classes</a>
+          <a type="button" href="{{ url_for('classes.eventCreation')}}" class="btn btn-secondary btn-lg px-4">Create a Class</a>
+        </div>
+      </div>
+    </div>
+    <!--End of Hero-->
+
+
+
+    <div class="container-fluid px-4 py-5 bg-body-primary">
+      <div class="container-lg">
+        <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+          <div class="col-lg-6 text-center">
+            <img src="{{ url_for('static',filename='image/food1.jpg') }}" class=" img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
+          </div>
+          <div class="col-lg-6 text-center text-lg-start">
+            <h2 class="display-5 fw-bold lh-1 mb-3">All ingredients and equipment provided</h2>
+            <p class="lead">Do not worry about any prep work or shopping list, just bring yourself and your enthusiasm for the culinary arts. Our experts will provide everything
+            you need to not just cook, but to shine in the kitchen.</p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid px-4 py-5">
+      <div class="container-lg">
+        <div class="row flex-lg-row align-items-center g-5 py-5">
+          <div class="col-lg-6 text-center">
+            <img src="{{ url_for('static',filename='image/food3.jpg') }}" class=" img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
+          </div>
+          <div class="col-lg-6 text-center text-lg-start">
+            <h2 class="display-5 fw-bold lh-1 mb-3">Enjoy the fruits of your labour</h2>
+            <p class="lead">Cooking is fun, but we all know that the best part of cooking is sitting down and enjoy a great meal at the end. 
+              All of our classes include a sit down feast to finish things off, so please come with an appetite</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <!--Cuisine Tiles-->
+        <div class="container-fluid bg-body-primary">
+          <div class="container-lg pt-5">
+            <div class="p-3 row-cols-1 text-center">
+              <h1 class="fw-bold lh-1 mb-3">Browse by Cuisine</h1>
+            </div>
+              
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-4 p-3">
+                <div class="col">
+                  <a class="home-tiles" href="{{url_for('classes.view_events', genre='Chinese')}}">
+                    <div class="card text-center h-100">
+                      <img src="{{ url_for('static',filename='image/chinese.jpg') }}" class="card-img-top" alt="Chinese food">
+                      <div class="card-body">
+                        <h5 class="card-title">Chinese</h5>
+                        
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div class="col">
+                  <a class="home-tiles" href="{{url_for('classes.view_events', genre='Thai')}}">
+                    <div class="card text-center h-100">
+                      <img src="{{ url_for('static',filename='image/thai.jpg') }}" class="card-img-top" alt="Thai food">
+                      <div class="card-body">
+                        <h5 class="card-title">Thai</h5>
+                        
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div class="col">
+                  <a class="home-tiles" href="{{url_for('classes.view_events', genre='French')}}">
+                    <div class="card text-center h-100">
+                      <img src="{{url_for('static',filename='image/french.jpg')}}" class="card-img-top" alt="French food">
+                      <div class="card-body">
+                        <h5 class="card-title">French</h5>
+                        
+                      </div>
+                    </div>
+                  </a>  
+                </div>
+                <div class="col">
+                  <a class="home-tiles" href="{{url_for('classes.view_events', genre='Italian')}}">
+                    <div class="card text-center h-100">
+                      <img src="{{url_for('static',filename='image/italian.jpg')}}" class="card-img-top" alt="italian">
+                      <div class="card-body">
+                        <h5 class="card-title">Italian</h5>
+                      
+                      </div>
+                    </div>
+                  </a>  
+                </div>
+              </div>
+                <div class="d-flex flex-wrap align-items-center justify-content-center pt-3 pb-5">
+                  <a class="btn btn-primary btn-lg" href="{{url_for('classes.view_all_events')}}" role="button">Browse All</a>
+          
+                </div>
+            </div>
+        </div>
+        <!--End of Cuisine Tiles-->
+
+        <!--Current Classes-->
+        <div class="container-fluid mb-5">
+          <div class="container-lg pt-5 gx-0">
+            <div class="p-3 row-cols-1 text-center">
+              <h1 class="fw-bold lh-1 mb-3">Upcoming Events</h1>
+            </div>
+            <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 g-4 ">
+              {% for event in current_events %}
+                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-3">
+                    <a class="card-link" href="{{url_for('classes.show', id = event.id)}}">
+                        <div class="card text-center h-100">
+                          <img src="{{event.image}}" class="card-img-top" alt="{{event.title}}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{event.title}} <br>
+                                {% if event.status == "Open" %}  
+                                <span class="badge bg-success">Open</span>
+                                {% elif event.status == "Cancelled" %}
+                                <span class="badge bg-warning">Cancelled</span>
+                                {% elif event.status == "Sold Out" %}
+                                <span class="badge bg-danger">Sold Out</span>
+                                {% endif %}
+                                </h5><p>
+                                <i class="bi bi-calendar3"></i>
+                                {{event.date.strftime("%b %d %Y")}} @ {{event.time.strftime("%I:%M %p")}}
+                                <br>
+                                <i class="bi bi-globe-asia-australia"></i>
+                                {{event.cuisine}} , {{event.level}}
+                                <br>
+                                <i class="bi bi-geo-alt-fill"></i>
+                                {{event.venue}}
+                                <br>
+                                <i class="bi bi-cash"></i>
+                                ${{event.price}}
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}  
+            </div>
+
+          </div>
+        </div>
+          <!--End of current events-->
+
+
+    </main>
+{% endblock %}
+

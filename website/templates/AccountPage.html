@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+
+
+<main>
+
+    <div class="container-fluid p-5 mb-3 text-center align-items-center bg-body-primary">
+        <h1 class="fw-bold">My Account</h1>
+    </div>
+    <div class="container-lg">
+        <nav>
+            <div class="nav nav-pills flex-column flex-sm-row mb-3" role="tablist">
+                <button class="flex-sm-fill text-sm-center nav-link active filter" id="pills-upcoming-tab" data-bs-toggle="pill" data-bs-target="#pills-upcoming" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Upcoming Bookings</a>
+                <button class="flex-sm-fill text-sm-center nav-link filter" id="pills-past-tab" data-bs-toggle="pill" data-bs-target="#pills-past" type="button" role="tab" aria-controls="pills-home" aria-selected="false">Past Bookings</a>
+                <button class="flex-sm-fill text-sm-center nav-link filter" id="pills-myclasses-tab" data-bs-toggle="pill" data-bs-target="#pills-myclasses" type="button" role="tab" aria-controls="pills-home" aria-selected="false">My Classes</a>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container-lg tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-upcoming" role="tabpanel" aria-labelledby="pills-upcoming-tab" tabindex="0">
+            <div class="container-md mb-5">
+                {% if myBookings|length == 0 %} 
+                    <div class="card mb-3">
+                        <div class="card-body text-center">
+                            <h5>You do not have any upcoming bookings. Check what is coming up, before it is too late!</h5>
+                            <a type="button" href="{{ url_for('classes.view_all_events')}}" class="btn btn-primary px-4 gap-3">Browse Classes</a>
+                        </div>
+                    </div>
+                {% else %}
+                    {% for booking in myBookings %}
+                    
+                    <a class="card-link" href="{{url_for('classes.show', id= booking.booked_class.id)}}">
+                        <div class="card mb-3 myaccount_card">
+                            <div class="row g-0">
+                                <div class="col-sm-3">
+                                  <img src="{{booking.booked_class.image}}" class="img-fluid rounded-start myaccount_image" alt="{{booking.booked_class.title}}">
+                                </div>
+                                <div class="col-sm-9">
+                                    <div class="card-body">
+                                        <h6 class="card-subtitle mb-2">Order ID: {{booking.id}}</h6>
+                                        <h5 class="card-title">{{booking.booked_class.title}} 
+                                            {% if booking.booked_class.status == "Open" %}  
+                                            <span class="badge bg-success">Open</span>
+                                            {% elif booking.booked_class.status == "Cancelled" %}
+                                            <span class="badge bg-warning">Cancelled</span>
+                                            {% elif booking.booked_class.status == "Sold Out" %}
+                                            <span class="badge bg-danger">Sold Out</span>
+                                            {% elif booking.booked_class.status == "Inactive" %}
+                                            <span class="badge bg-light" style="color:hsla(0, 0%, 0%, 0.5);">Inactive</span>
+                                            {% endif %}
+                                        </h5>
+                                        <h6 class="card-subtitle mb-2">{{booking.booked_class.date.strftime("%b %d %Y")}} @ {{booking.booked_class.time.strftime("%I:%M %p")}}</h6>
+                                        <p class="card-text">{{booking.booked_class.venue}}</p>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    {% endfor %}
+                {% endif %}    
+            </div>
+
+
+
+        </div>
+        <div class="tab-pane fade" id="pills-past" role="tabpanel" aria-labelledby="pills-past-tab" tabindex="0">
+            <div class="container-md mb-5">
+                {% if pastBookings|length == 0 %} 
+                    <div class="card mb-3">
+                        <div class="card-body text-center">
+                            <h5>We do not have any shared memories yet, but hopefully you have something coming up.</h5>
+                            <a type="button" href="{{ url_for('classes.view_all_events')}}" class="btn btn-primary px-4 gap-3">Browse Classes</a>
+                        </div>
+                    </div>
+                {% else %}
+                    {% for booking in pastBookings %}
+                    
+                    <a class="card-link" href="{{url_for('classes.show', id= booking.booked_class.id)}}">
+                        <div class="card mb-3 myaccount_card">
+                            <div class="row g-0">
+                                <div class="col-sm-3">
+                                  <img src="{{booking.booked_class.image}}" class="img-fluid rounded-start myaccount_image" alt="{{booking.booked_class.title}}">
+                                </div>
+                                <div class="col-sm-9">
+                                    <div class="card-body">
+                                        <h6 class="card-subtitle mb-2">Order ID: {{booking.id}}</h6>
+                                        <h5 class="card-title">{{booking.booked_class.title}} <span class="badge bg-light" style="color:hsla(0, 0%, 0%, 0.5);">Inactive</span></h5> <!--all events here should be inactive-->
+                                        <h6 class="card-subtitle mb-2">{{booking.booked_class.date.strftime("%b %d %Y")}} @ {{booking.booked_class.time.strftime("%I:%M %p")}}</h6>
+                                        <p class="card-text">{{booking.booked_class.venue}}</p>
+                                        
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    {% endfor %}
+                {% endif %}
+            </div>
+        
+        </div>
+
+
+        <div class="tab-pane fade" id="pills-myclasses" role="tabpanel" aria-labelledby="pills-myclassses-tab" tabindex="0">
+            <div class="container-md mb-5">
+                {% if myClasses|length == 0 %} 
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5>You are not hosting any classes yet, would you like to change that?</h5>
+                            <a type="button" href="{{ url_for('classes.eventCreation')}}" class="btn btn-primary px-4 gap-3">Create a Class</a>
+                        </div>
+                    </div>
+                {% else %}
+                    {% for event in myClasses %}
+                    <div class="card mb-3">
+                        <div class="row g-0">
+                            <div class="col-md-3">
+                              <img src="{{event.image}}" class="img-fluid rounded-start myaccount_image" alt="{{event.title}}">
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{event.title}} 
+                                        {% if event.status == "Open" %}  
+                                        <span class="badge bg-success">Open</span>
+                                        {% elif event.status == "Cancelled" %}
+                                        <span class="badge bg-warning">Cancelled</span>
+                                        {% elif event.status == "Sold Out" %}
+                                        <span class="badge bg-danger">Sold Out</span>
+                                        {% elif event.status == "Inactive" %}
+                                        <span class="badge bg-light" style="color:hsla(0, 0%, 0%, 0.5);">Inactive</span>
+                                        {% endif %}
+                                    </h5>
+                                    <h6 class="card-subtitle mb-2">{{event.date.strftime("%b %d %Y")}} @ {{event.time.strftime("%I:%M %p")}}</h6>
+                                    <p class="card-text">{{event.venue}}</p>
+                                </div> 
+                            </div>   
+                            <div class="col-md-3">           
+                                
+                                <div class="card-body text-center mx-2">
+                                    <div class="row">
+                                        {% if event.status != 'Cancelled' and event.status != 'Inactive' %}
+                                        <a type="button" href="{{url_for('classes.cancel_class', id= event.id)}}" class="btn btn-primary px-4 mb-2">Cancel Class</a>
+                                        {% elif event.status == 'Cancelled' %}
+                                        <a type="button" href="{{url_for('classes.reinstate', id= event.id)}}" class="btn btn-primary px-4 mb-2">Undo Cancel</a>
+                                        {% endif %}
+                                    </div>
+                                
+                                    <div class="row">   
+                                        <a type="button" href="{{url_for('classes.update_event', id= event.id)}}" class="btn btn-secondary px-4 mb-2">Edit Class</a>
+                                    </div> 
+                                </div>
+                                
+                                                    
+                            </div> 
+                        </div>
+                    </div>
+                    
+                    
+                    
+                    {% endfor %}
+                {% endif %}
+            </div>
+      </div>
+    </div>
+
+</main>
+
+
+{% endblock %}

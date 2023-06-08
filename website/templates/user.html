@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% from "bootstrap5/form.html" import render_form %}
+{% block content %}
+
+<div class="page-header ps-2 padding10">
+    <h4>{{heading}}</h4>
+</div>
+
+<!-- Form rendering is simple and easy if using WTForms -->
+<!-- If you want more granular control, declare the form manually: -->
+<!-- <form action="/route" method="post"> -->
+<div class="col-md-6 ps-2 mb-5">
+    {{render_form(form)}}
+</div>
+
+<!-- When you have login form, then show the user a link to register -->
+{% if heading|lower =='login' %}
+<div class="col-md-4 ps-2">
+    <p>New user? <a href="{{ url_for('auth.register') }}">Click here to register</a>.</p>
+</div>
+{% endif %}
+
+{% endblock %}

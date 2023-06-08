@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% from "bootstrap5/form.html" import render_form %}
+{% block header %}
+{% endblock %}
+
+{% block content %}
+
+<main>
+
+<div class="container-fluid p-5 mb-3 text-center align-items-center bg-body-primary ">
+  <h1 class="fw-bold">Create a Class</h1>
+</div>
+
+
+<!--Start of Form-->
+<div class="container-lg">
+   
+    <div class="row mb-3">
+         {{ render_form(form)}}
+         <a type="button" href="{{ url_for('main.index')}}" class="btn btn-secondary btn-md px-4 gap-3 mt-2 ms-2" style="width: 9rem" >Cancel</a>
+    </div>   
+</div>
+
+</main>
+
+
+{% endblock %}

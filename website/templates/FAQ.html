@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+<main>
+    <div class="container-fluid px-4 py-5 bg-body-primary">
+      <div class="container-lg">
+        <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+          <div class="col-lg-6 text-center">
+            <img src="{{ url_for('static',filename='image/question-mark.jpg') }}" class=" img-fluid" alt="question mark" width="700" height="500" loading="lazy">
+          </div>
+          <div class="col-lg-6 text-center text-lg-start">
+            <h2 class="display-5 fw-bold lh-1 mb-3">What does this website aim for?</h2>
+            <p class="lead">This website isn't only guiding you to cook - it is a place to learn and teach others the experience that you have honed.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid px-4 py-5">
+      <div class="container-lg">
+        <div class="row flex-lg-row align-items-center g-5 py-5">
+          <div class="col-lg-6 text-center">
+            <img src="{{ url_for('static',filename='image/tools.jpg') }}" class=" img-fluid" alt="cooking equipment" width="700" height="500" loading="lazy">
+          </div>
+          <div class="col-lg-6 text-center text-lg-start">
+            <h2 class="display-5 fw-bold lh-1 mb-3">When attending an event, do I need to bring anything?</h2>
+            <p class="lead">No need! All the required tools and ingredients are already provided.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid px-4 py-5 bg-body-primary">
+      <div class="container-lg">
+          <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+            <div class="col-lg-6 text-center">
+              <img src="{{ url_for('static',filename='image/teaching.jpg') }}" class=" img-fluid" alt="teacher image" width="700" height="500" loading="lazy">
+            </div>
+            <div class="col-lg-6 text-center text-lg-start">
+              <h2 class="display-5 fw-bold lh-1 mb-3">Should I be worry if I do/do not have experience on cooking?</h2>
+              <p class="lead">Don't worry! The mentors got your back. Even if you don't have any experience, they can guide you step by step at the event.</p>
+            </div>
+          </div>
+        </div>
+      </div> 
+
+    <div class="container-fluid px-4 py-5">
+        <div class="container-lg">
+          <div class="row flex-lg-row align-items-center g-5 py-5">
+            <div class="col-lg-6 text-center">
+              <img src="{{ url_for('static',filename='image/question-2.jpg') }}" class=" img-fluid" alt="question mark" width="700" height="500" loading="lazy">
+            </div>
+            <div class="col-lg-6 text-center text-lg-start">
+              <h2 class="display-5 fw-bold lh-1 mb-3">Can I edit my events?</h2>
+              <p class="lead">Of course you can! Make sure you adjust your events to suitably fit your timetable.</p>
+            </div>
+          </div>
+        </div>
+    </div>
+
+</main>
+{% endblock %}

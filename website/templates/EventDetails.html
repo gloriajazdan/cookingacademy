@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% from "bootstrap5/form.html" import render_form %}
+{% block header %}
+{% endblock %}
+
+{% block content %}
+
+    <main>
+        <!-- Jumbotron -->
+      
+        <div class="container-fluid text-center text-white"
+        style="background-image: url({{event.image}}); background-size: cover; height: 15rem; background-position: center;  --bs-gutter-x: 0;">
+          <div class="mask m-0" style="background-color: hsla(0, 0%, 0%, 0.5); height: 100%;" >
+             <div class="d-flex justify-content-center align-items-end h-100 p-3"><h1 class="fw-bold">{{event.title}} 
+                  {% if event.status == "Open" %}  
+                  <span class="badge bg-success">Open</span>
+                  {% elif event.status == "Cancelled" %}
+                  <span class="badge bg-warning">Cancelled</span>
+                  {% elif event.status == "Sold Out" %}
+                  <span class="badge bg-danger">Sold Out</span>
+                  {% elif event.status == "Inactive" %}
+                  <span class="badge bg-light" style="color:hsla(0, 0%, 0%, 0.5);">Inactive</span>
+                  {% endif %}
+                  </h1>
+            </div>
+          </div>
+        </div>
+
+        
+      
+        <!-- Jumbotron -->
+        <div class="container-lg mt-3">
+            <div class="row g-3">
+                <div class= "col-12 col-md-8  px-2" >
+                  <div class="card" style="height: 100%; width:100%">
+                    <div class="card-header text-center">
+                      <h4 class="fw-bold">Description</h4>
+                    </div>
+                    <div class="card-body">
+                    <p>{{event.description}}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class= "col col-md-4 rounded">
+                  <div class="row ">
+                    <div class="col mb-2">
+                      <div class="card" style="width:100%;" >
+                        <div class="card-header text-center">
+                          <h4 class="fw-bold">Details</h4>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                          <li class="list-group-item">Cuisine: {{event.cuisine}}</li>
+                          <li class="list-group-item">Date: {{event.date.strftime("%b %d %Y")}} @ {{event.time.strftime("%I:%M %p")}}</li>
+                          <li class="list-group-item">Level: {{event.level}}</li>
+                          <li class="list-group-item">Cost: ${{event.price}}</li>
+                        </ul>
+
+                        <!-- Button trigger modal -->
+                        <div class="card-body text-center">
+                          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bookTickets">Book Tickets</button>
+                        </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="bookTickets" tabindex="-1" aria-labelledby="bookTicketsLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content text-center">
+                              <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Book Tickets</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                {{render_form(booking_form, "/classes/{0}/book".format(event.id))}}
+                              </div>
+                              
+                            </div>
+                          </div>
+                        </div>
+
+
+                      </div>
+                    </div>  
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <div class="card">
+                        <div class="card-header text-center">
+                          <h4 class="fw-bold">Location</h4>
+                        </div>
+                        <div class="card-body">
+                          <p class="mb-0">{{event.venue}}</p>
+                        </div>
+                        
+                      </div>
+                    </div>    
+                  </div>
+                </div>
+            </div>
+            <div class="row">
+              <div class= "col-12 col-md-8" >
+                <div class="container-fluid p-0 mt-3 mb-3">
+                      <div class="card">
+                        <div class="card-header text-center">
+                          <h4 class="fw-bold">Comments</h4>      
+                        </div>
+                        <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
+                          <div class="d-flex flex-start w-100">
+                            <div class="form-outline w-100">
+                              {{render_form(form,"/classes/{0}/comment".format(event.id))}}
+                            </div>            
+                           
+                          </div>
+                        </div>
+                
+                        <div class="mt-2">
+                          
+                          {%for comment in event.comments %}
+                          <div class="flex-row px-4 m-2">
+                            <div class="w-100">
+                              <div class="d-flex justify-content-between align-items-center" >
+                                  <div class="d-flex flex-row align-items-center">
+                                    <span class="comment-author">{{comment.user.username}}</span>
+                                  </div>
+                                  <small>{{comment.created_at.strftime("%b %d %Y @ %I:%M %p")}}</small>
+                              </div>
+                            <p class="text-justify comment-text mb-0">{{comment.text}}</p>           
+                            </div>
+                            <hr>
+                          </div>
+                          {% endfor %} 
+                        </div>
+                            
+ 
+
+                      </div>
+                </div>
+              </div>
+
+            </div>
+
+        </div>
+
+        
+
+
+
+    </main>
+    
+    {% endblock %}
+
+   

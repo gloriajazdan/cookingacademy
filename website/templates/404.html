@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container-lg text-center">
+	<div>
+    		<img src="{{ url_for('static',filename='image/404.png') }}" alt="404 error" class="img-fluid" style="width: 60%;">
+	</div>
+	<div class="pb-3">
+    		<a href="https://storyset.com/web" style="font-size: 0.7rem;">Web illustrations by Storyset</a>
+	</div>
+	<div class="d-grid gap-2 d-sm-flex mb-5 justify-content-sm-center">
+    		<a type="button" href="/" class="btn btn-primary btn-lg px-4 gap-3">Return Home</a>
+	</div>
+</div>
+
+
+
+{% endblock %}
